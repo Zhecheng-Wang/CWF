@@ -1,22 +1,36 @@
 cmake_minimum_required(VERSION 3.17)
 
+# Ensure VERSION is defined
+set(VERSION 1.0)
+
 set(BGAL_BaseShape_SRC
-        KDTree.cpp
-        Line.cpp
-        Point.cpp
-        Polygon.cpp
-        Triangle.cpp
-        )
-# Get static lib
+    KDTree.cpp
+    Line.cpp
+    Point.cpp
+    Polygon.cpp
+    Triangle.cpp
+)
+
+# Create the static library for BaseShape
 add_library(BaseShape STATIC ${BGAL_BaseShape_SRC})
-target_link_libraries(BaseShape Algorithm ${Boost_LIBRARIES})
-set_target_properties(BaseShape PROPERTIES VERSION ${VERSION})
-set_target_properties(BaseShape PROPERTIES CLEAN_DIRECT_OUTPUT 1)
 
+# Set multiple properties for the BaseShape target in one call
+set_target_properties(BaseShape PROPERTIES 
+    CXX_STANDARD 17
+    VERSION ${VERSION}
+    CLEAN_DIRECT_OUTPUT 1
+)
 
+# Include directories
 target_include_directories(BaseShape PUBLIC
-	$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-	$<INSTALL_INTERFACE:include>)
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
 
-
-target_link_libraries (BaseShape CGAL::CGAL Eigen3::Eigen)
+# Link libraries
+target_link_libraries(BaseShape 
+    Algorithm 
+    ${Boost_LIBRARIES}
+    CGAL::CGAL 
+    Eigen3::Eigen
+)

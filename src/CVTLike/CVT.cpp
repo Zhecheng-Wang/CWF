@@ -45,7 +45,7 @@ typedef CGAL::AABB_face_graph_triangle_primitive<Polyhedron> Primitive;
 typedef CGAL::AABB_traits<K_T, Primitive> Traits;
 typedef CGAL::AABB_tree<Traits> Tree;
 typedef Tree::Point_and_primitive_id Point_and_primitive_id;
-double gamma = 0.00000000000001;
+double gamma_value = 1e-10;
 struct MyPoint
 {
 	MyPoint(Eigen::Vector3d a)
@@ -68,7 +68,7 @@ struct MyPoint
 
 
 		double dis = (p - a.p).norm();
-		if (dis < gamma)
+		if (dis < gamma_value)
 		{
 			return false;
 		}
